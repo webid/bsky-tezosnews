@@ -1,0 +1,18 @@
+[Unit]
+Description=Tezos News Bluesky Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=www-data
+WorkingDirectory=/opt/bsky-tezosnews
+ExecStart=/usr/bin/node --import tsx src/main.ts
+EnvironmentFile=/opt/bsky-tezosnews/.env
+StandardOutput=journal
+StandardError=journal
+# Allow enough time for catch-up posting (multiple articles × 5 min each)
+TimeoutStartSec=1800
+
+[Install]
+WantedBy=multi-user.target

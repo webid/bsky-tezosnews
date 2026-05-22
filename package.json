@@ -1,0 +1,29 @@
+{
+  "name": "bsky-tezosnews",
+  "version": "1.0.0",
+  "description": "Bluesky bot that posts Tezos ecosystem news from the TezLens feed",
+  "type": "module",
+  "scripts": {
+    "start": "node --import tsx src/main.ts",
+    "daemon": "node --import tsx src/main.ts --daemon",
+    "dry-run": "DRY_RUN=true node --import tsx src/main.ts",
+    "seed": "node --import tsx src/main.ts --seed",
+    "seed:test": "node --import tsx src/main.ts --seed --leave=3",
+    "recent": "node --import tsx src/main.ts --recent"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.14.5",
+    "better-sqlite3": "^11.7.0",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^20.17.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
