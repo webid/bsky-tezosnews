@@ -8,6 +8,7 @@ import { extractDescription, downloadImage } from "./utils.js";
 // Add more official handles here as you discover them!
 const FEED_BLUESKY_HANDLES: Record<string, string> = {
   "Tezos Commons": "@tezoscommons.org",
+  "Tezos Events Calendar": "Tezos Events Calendar (@thetezoscommunity.bsky.social)",
   // Add more as discovered:
   // "Nomadic Labs R&D": "@nomadiclabs.tetaneutral.net",
   // "Etherlink": "@etherlink.bsky.social",

@@ -4,6 +4,7 @@ export interface Config {
   bskyHandle: string;
   bskyAppPassword: string;
   feedUrl: string;
+  mecEventsUrl?: string;
   catchupIntervalMs: number;
   dbPath: string;
   dryRun: boolean;
@@ -30,6 +31,7 @@ export function loadConfig(): Config {
     feedUrl:
       process.env.FEED_URL ||
       "https://tezlens.purplematter.com/api/articles",
+    mecEventsUrl: process.env.MEC_EVENTS_URL,
     catchupIntervalMs: parseInt(process.env.CATCHUP_INTERVAL_MS || "300000", 10),
     dbPath,
     dryRun: process.env.DRY_RUN === "true",

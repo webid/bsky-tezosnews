@@ -143,3 +143,19 @@ export function formatDuration(ms: number): string {
   if (ms < 60_000) return `${(ms / 1000).toFixed(0)}s`;
   return `${(ms / 60_000).toFixed(1)}min`;
 }
+
+/**
+ * Decode HTML entities in a string using cheerio.
+ */
+export function decodeHtmlEntities(html: string): string {
+  if (!html || html.trim().length === 0) {
+    return "";
+  }
+  try {
+    const $ = cheerioLoad(html);
+    return $.text();
+  } catch {
+    return html;
+  }
+}
+

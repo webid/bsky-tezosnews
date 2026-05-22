@@ -38,7 +38,7 @@ async function seed(): Promise<void> {
   const storage = new Storage(config.dbPath);
 
   // Articles come sorted oldest-first from fetchArticles
-  const articles = await fetchArticles(config.feedUrl);
+  const articles = await fetchArticles(config.feedUrl, config.mecEventsUrl);
 
   // Determine how many to seed (all except the last `leaveCount`)
   const toSeed = leaveCount > 0
@@ -110,6 +110,9 @@ async function run(): Promise<boolean> {
   // 1. Load configuration
   const config = loadConfig();
   console.log(`[main] Feed URL: ${config.feedUrl}`);
+  if (config.mecEventsUrl) {
+    console.log(`[main] MEC Events URL: ${config.mecEventsUrl}`);
+  }
   console.log(`[main] Dry run: ${config.dryRun}`);
   console.log(
     `[main] Catch-up interval: ${formatDuration(config.catchupIntervalMs)}`
@@ -137,7 +140,7 @@ async function run(): Promise<boolean> {
   // 4. Fetch articles from the API
   let articles;
   try {
-    articles = await fetchArticles(config.feedUrl);
+    articles = await fetchArticles(config.feedUrl, config.mecEventsUrl);
   } catch (err) {
     console.error("[main] Failed to fetch articles:", err);
     storage.close();
