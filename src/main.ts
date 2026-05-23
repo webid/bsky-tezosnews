@@ -56,9 +56,22 @@ async function seed(): Promise<void> {
     }
   }
 
+  let unseeded = 0;
+  for (const article of left) {
+    if (storage.isPosted(article.link)) {
+      storage.unmarkPosted(article.link);
+      unseeded++;
+    }
+  }
+
   console.log(
     `[seed] Marked ${seeded} articles as posted (${toSeed.length - seeded} already in DB)`
   );
+  if (unseeded > 0) {
+    console.log(
+      `[seed] Removed ${unseeded} 'left' article(s) from database to ensure they are unseeded`
+    );
+  }
   console.log(`[seed] Total articles in database: ${storage.getCount()}`);
 
   if (left.length > 0) {

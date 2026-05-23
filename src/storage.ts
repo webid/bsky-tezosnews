@@ -49,6 +49,15 @@ export class Storage {
   }
 
   /**
+   * Remove an article from the database (unmark it as posted).
+   */
+  unmarkPosted(link: string): void {
+    this.db
+      .prepare("DELETE FROM posted_articles WHERE link = ?")
+      .run(link);
+  }
+
+  /**
    * Get the N most recently posted articles (for debugging).
    */
   getRecent(n: number = 10): Array<{
