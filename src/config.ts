@@ -9,6 +9,7 @@ export interface Config {
   dbPath: string;
   dryRun: boolean;
   sessionPath: string;
+  maxArticleAgeDays: number;
 }
 
 function requireEnv(key: string): string {
@@ -36,5 +37,6 @@ export function loadConfig(): Config {
     dbPath,
     dryRun: process.env.DRY_RUN === "true",
     sessionPath,
+    maxArticleAgeDays: parseInt(process.env.MAX_ARTICLE_AGE_DAYS || "7", 10),
   };
 }

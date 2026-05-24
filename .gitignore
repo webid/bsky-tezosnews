@@ -6,3 +6,5 @@ logs/
 .env
 *.log
 .DS_Store
+data/test-temp.db-shm
+data/test-temp.db-wal

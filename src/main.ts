@@ -160,8 +160,37 @@ async function run(): Promise<boolean> {
     throw err;
   }
 
-  // 5. Filter out already-posted articles
-  const newArticles = articles.filter((a) => !storage.isPosted(a.link));
+  // 5. Filter out already-posted articles and those that are too old
+  const now = new Date();
+  const maxAgeMs = config.maxArticleAgeDays * 24 * 60 * 60 * 1000;
+  let skippedCount = 0;
+
+  const newArticles = articles.filter((a) => {
+    if (storage.isPosted(a.link)) {
+      return false;
+    }
+
+    const ageMs = now.getTime() - a.parsedDate.getTime();
+    if (ageMs > maxAgeMs) {
+      console.log(
+        `[main] Skipping old article: "${a.title}" (published ${a.pubDate})`
+      );
+      if (!config.dryRun) {
+        storage.markPosted(a.link, a.title, a.feedTitle);
+      }
+      skippedCount++;
+      return false;
+    }
+
+    return true;
+  });
+
+  if (skippedCount > 0) {
+    console.log(
+      `[main] Skipped and cached ${skippedCount} old article(s) older than ${config.maxArticleAgeDays} days`
+    );
+  }
+
   console.log(
     `[main] ${newArticles.length} new article(s) to post (out of ${articles.length} total)`
   );
